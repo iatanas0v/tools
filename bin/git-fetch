@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Fetches all branches from the remote repository and prunes
+git fetch --all --prune

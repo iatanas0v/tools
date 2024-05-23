@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Returns the default branch name - should be either `master` or `main`
+git branch | grep -i 'master\|main' | sed 's/* //' | sed 's/  //' | sort | head -n 1

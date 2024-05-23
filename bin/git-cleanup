@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Delete all branches except the default branch
+git branch | grep -v $(git-default-branch) | xargs --no-run-if-empty git branch -D
