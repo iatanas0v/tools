@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Use to start working on an existing branch.
+# The script rebases on the latest master
+branch=$1
+
+if [ -z "$branch" ]; then
+  echo "Please, specify a branch name."
+  echo "Usage: $0 <branch>"
+  exit 1
+fi
+
+git-master
+git checkout $branch
+git rebase master
