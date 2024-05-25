@@ -11,5 +11,15 @@ if [ -z "$branch" ]; then
 fi
 
 git-master
-git checkout $branch
-git rebase master
+
+branch_exists=$(git branch --list $branch)
+
+if [ -z "$branch_exists" ]; then
+  echo "Branch $branch does not exist. Creating it."
+  git checkout -b $branch
+else
+  echo "Branch $branch exists. Rebasing on master."
+  git checkout $branch
+  git rebase master
+fi
+
