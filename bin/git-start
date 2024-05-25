@@ -10,8 +10,23 @@ if [ -z "$branch" ]; then
   exit 1
 fi
 
+# Stash any changes in the working tree
+tree_changes=$(git status -s)
+changes_stashed=0
+
+if [ ! -z "$tree_changes" ]; then
+  echo "Working tree is not clean."
+  echo "Stashing the changes for you."
+
+  git stash save -u "[git-start] Working changes"
+
+  changes_stashed=1
+fi
+
+# Bring master up to date
 git-master
 
+# Either create or checkout the target branch
 branch_exists=$(git branch --list $branch)
 
 if [ -z "$branch_exists" ]; then
@@ -23,3 +38,9 @@ else
   git rebase master
 fi
 
+# Pop (any) stashed changes
+if [ $changes_stashed -eq 1 ]; then
+  echo "Popping the stashed changes."
+
+  git stash pop
+fi
