@@ -3,11 +3,20 @@
 # Use to start working on an existing branch.
 # The script rebases on the latest master
 branch=$1
+current_branch=$(git branch --show-current)
+default_branch=$(git-default-branch)
 
 if [ -z "$branch" ]; then
-  echo "Please, specify a branch name."
-  echo "Usage: $0 <branch>"
-  exit 1
+  if [ "$current_branch" != "$default_branch" ]; then
+    echo "You did not passed a branch name."
+    echo "Going to use $current_branch."
+
+    branch=$current_branch
+  else
+    echo "Please, specify a branch name."
+    echo "Usage: $0 <branch>"
+    exit 1
+  fi
 fi
 
 # Stash any changes in the working tree
