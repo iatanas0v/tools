@@ -36,7 +36,7 @@ fi
 git-master
 
 # Either create or checkout the target branch
-branch_exists=$(git branch --list $branch)
+branch_exists=$(git branch -a | grep "$branch\$")
 
 if [ -z "$branch_exists" ]; then
   echo "Branch $branch does not exist. Creating it."
