@@ -6,7 +6,7 @@
 # The script accepts the name of the target branch as first argument
 # but it also allows being run like `git-start git checkout -b my-branch`. I know this is weird
 # but softwares like JIRA tends to give you such commandsa as copy-and-go. So it's just a convinience feature.
-if [ $1 = "git" ] && [ $2 = "checkout" ] && [ $3 = '-b' ] && [ ! -z "$4" ]; then
+if [[ $1 = "git" ]] && [[ $2 = "checkout" ]] && [[ $3 = '-b' ]] && [[ ! -z "$4" ]]; then
   branch=$4
 else
   branch=$1
