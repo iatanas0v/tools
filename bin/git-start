@@ -53,7 +53,8 @@ if [ -z "$branch_exists" ]; then
 else
   echo "Branch $branch exists. Rebasing on master."
   git checkout $branch
-  git rebase master
+  git pull
+  git rebase $(git-default-branch)
 fi
 
 # Pop (any) stashed changes
