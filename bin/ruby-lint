@@ -1,8 +1,15 @@
 #!/bin/bash
 
-rubocop_installed=$(bundle list --name-only | grep rubocop | grep -v "rubocop-")
+if [ -f ./bin/rubocop ]; then
+  ./bin/rubocop
+else
+  # Use bundler
+  rubocop_installed=$(bundle list --name-only | grep rubocop | grep -v "rubocop-")
 
-if [ ! -z "$rubocop_installed" ]; then
-  echo "Rubocop is installed. Running it"
-  bundle exec rubocop
+  if [ ! -z "$rubocop_installed" ]; then
+    bundle exec rubocop
+  else
+    echo "Rubocop is not found"
+    exit 404
+  fi
 fi
