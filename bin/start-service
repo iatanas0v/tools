@@ -1,0 +1,10 @@
+#!/bin/bash
+
+service_name=$1
+active=$(systemctl is-active "$service_name")
+
+if [ $active = "active" ]; then
+  exit 0
+else
+  systemctl start $service_name
+fi

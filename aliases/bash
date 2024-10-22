@@ -1,0 +1,3 @@
+# .bashrc
+
+alias docker="start-service docker && /usr/bin/docker"
