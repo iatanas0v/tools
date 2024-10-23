@@ -1,0 +1,13 @@
+#!/bin/bash
+
+container_id=$(docker ps --filter "name=tools-pgsql-" -q)
+
+if [ -z "$container_id" ]; then
+  echo "No PGSQL container is running! Use start-pgsql {VERSION} first!"
+  exit 1
+fi
+
+user=$(whoami)
+
+docker exec -u 0 "$container_id" bash -c "cat /etc/passwd | grep ${USER_NAME} >/dev/null 2>&1 && adduser --disabled-password --gecos 1000 $user"
+docker exec -it "$container_id" bash -c "/usr/bin/pg_dump $*"

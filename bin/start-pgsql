@@ -1,0 +1,36 @@
+#!/bin/bash
+
+version=$1
+data_path="$HOME/.tools/pgsql/$version/data/"
+
+mkdir -p "$data_path"
+
+running_pgql_container_id=$(docker ps -q --filter "name=tools-pgsql-")
+
+if [ -n "$running_pgql_container_id" ]; then
+  if [ "$running_pgql_container_id" == "$(docker ps -q --filter "name=tools-pgsql-$version")" ]; then
+    echo "PostgreSQL container is already running."
+    exit 0
+  else
+    echo "Stopping running PostgreSQL container..."
+    docker stop "$running_pgql_container_id"
+  fi
+fi
+
+existing_container_id=$(docker container ls --all --filter "name=tools-pgsql-$version" -q)
+if [ -n "$existing_container_id" ]; then
+  docker container rm "$existing_container_id"
+fi
+
+docker run -d \
+  -e POSTGRES_USER=$(whoami) \
+  -e POSTGRES_PASSWORD=password \
+  -e POSTGRES_HOST_AUTH_METHOD=trust \
+  -v "$data_path":/var/lib/postgresql/data \
+  -v "$HOME":/home \
+  -p 5432:5432 \
+  --user "1000:1000" \
+  --name "tools-pgsql-$version" \
+  postgres:$version
+
+docker ps --filter "name=tools-pgsql-$version"
