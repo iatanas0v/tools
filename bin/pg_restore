@@ -9,5 +9,5 @@ fi
 
 user=$(whoami)
 
-docker exec -u 0 "$container_id" bash -c "cat /etc/passwd | grep ${USER_NAME} >/dev/null 2>&1 && adduser --disabled-password --gecos 1000 $user"
+docker exec -u 0 "$container_id" bash -c "cat /etc/passwd | grep ${user} >/dev/null 2>&1 && adduser --disabled-password --gecos 1000 $user"
 docker exec -it "$container_id" bash -c "/usr/bin/pg_restore $*"
