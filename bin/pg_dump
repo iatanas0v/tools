@@ -1,5 +1,6 @@
 #!/bin/bash
 
+start-service docker
 container_id=$(docker ps --filter "name=tools-pgsql-" -q)
 
 if [ -z "$container_id" ]; then

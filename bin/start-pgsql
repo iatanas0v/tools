@@ -1,5 +1,7 @@
 #!/bin/bash
 
+start-service docker
+
 version=$1
 data_path="$HOME/.tools/pgsql/$version/data/"
 
