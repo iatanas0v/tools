@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Run bundle install if Gemfile is present
+if [ -f Gemfile ]; then
+  bundle install
+fi
+
+# Run yarn install if yarn.lock is present
+if [ -f yarn.lock ]; then
+  yarn install
+fi
+
+# Run bin/rails db:migrate if bin/rails is present
+if [ -f bin/rails ]; then
+  bin/rails db:migrate
+fi

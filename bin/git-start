@@ -12,6 +12,10 @@ else
   branch=$1
 fi
 
+if [ "$branch" = "--dev" ]; then
+  branch=""
+fi
+
 current_branch=$(git branch --show-current)
 default_branch=$(git-default-branch)
 
@@ -62,4 +66,9 @@ if [ $changes_stashed -eq 1 ]; then
   echo "Popping the stashed changes."
 
   git stash pop
+fi
+
+# Run dev-start if --dev flag is passed as any argument
+if [[ $* == *--dev* ]]; then
+  dev-start
 fi
