@@ -5,7 +5,7 @@
 
 # The script accepts the name of the target branch as first argument
 # but it also allows being run like `git-start git checkout -b my-branch`. I know this is weird
-# but softwares like JIRA tends to give you such commandsa as copy-and-go. So it's just a convinience feature.
+# but softwares like JIRA tends to give you such commands as copy-and-go. So it's just a convinience feature.
 if [[ $1 = "git" ]] && [[ $2 = "checkout" ]] && [[ $3 = '-b' ]] && [[ ! -z "$4" ]]; then
   branch=$4
 else
@@ -20,16 +20,10 @@ current_branch=$(git branch --show-current)
 default_branch=$(git-default-branch)
 
 if [ -z "$branch" ]; then
-  if [ "$current_branch" != "$default_branch" ]; then
-    echo "You did not passed a branch name."
-    echo "Going to use $current_branch."
+  echo "You did not passed a branch name."
+  echo "Going to use $current_branch."
 
-    branch=$current_branch
-  else
-    echo "Please, specify a branch name."
-    echo "Usage: $0 <branch>"
-    exit 1
-  fi
+  branch=$current_branch
 fi
 
 # Stash any changes in the working tree
@@ -54,7 +48,7 @@ branch_exists=$(git branch -a | grep "$branch\$")
 if [ -z "$branch_exists" ]; then
   echo "Branch $branch does not exist. Creating it."
   git checkout -b $branch
-else
+elif [ "$branch" != "$current_branch" ]; then
   echo "Branch $branch exists. Rebasing on master."
   git checkout $branch
   git pull
