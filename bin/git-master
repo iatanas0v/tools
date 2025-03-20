@@ -1,4 +1,4 @@
 #!/bin/bash
 
-# Checks out the default branch, fetches all remotes, prunes, pulls, and shows the status.
-git checkout $(git-default-branch) && git-fetch && git pull && git status
+# Checks out the default branch, fetches all remotes, prunes, resets, and shows the status.
+git checkout $(git-default-branch) && git-fetch && git reset --hard origin/$(git-default-branch) && git status
